@@ -212,7 +212,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link">
+            <a href="../phpDasar2/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -285,12 +285,20 @@
             <input type="text" class="form-control" id="nama_produk" name="product_name">
         </div>
         <div class="col-12">
+            <label for="kategori" class="form-label">Kategori</label>
+            <input type="text" class="form-control" id="kategori" name="kategori">
+        </div>
+        <div class="col-12">
             <label for="harga" class="form-label">Harga</label>
             <input type="number" class="form-control" id="harga" name="price">
         </div>
         <div class="col-12">
             <label for="stok" class="form-label">Stok</label>
             <input type="number" class="form-control" id="stok" name="stock">
+        </div>
+        <div class="col-12">
+            <label for="deskrpsi" class="form-label">Deskripsi</label>
+            <input type="text" class="form-control" id="deskripsi" name="deskripsi">
         </div> <br>
         <div class="col-12">
           <a href="index.php" class="btn btn-secondary">Cancel</a>

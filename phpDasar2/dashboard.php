@@ -207,7 +207,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="listProduk.php" class="nav-link">
+            <a href="../DML/index.php" class="nav-link">
               <i class="nav-icon fa fa-cubes"></i>
               <p>
                 Produk

@@ -5,11 +5,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
     $kode_produk = $_POST['product_code'];
     $nama = $_POST['product_name'];
+    $kategori = $_POST['kategori'];
     $price = $_POST['price'];
     $stok = $_POST['stock'];
+    $deskripsi = $_POST['deskripsi'];
 
     $query = "UPDATE products SET product_code = '$kode_produk', product_name = '$nama', 
-    price = '$price', stock = '$stok' WHERE id = $id";
+    id_kategori = '$kategori', price = '$price', stock = '$stok', description = '$deskripsi' WHERE id = $id";
 
     if ($conn->query($query) === TRUE) {
         header('location: index.php');

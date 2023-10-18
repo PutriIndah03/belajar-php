@@ -38,9 +38,9 @@
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block">
-          <form class="form-inline">
+          <form class="form-inline" action="search.php" method="GET">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name = "search">
               <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
@@ -180,7 +180,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link">
+            <a href="../phpDasar2/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -253,11 +253,17 @@
                       <th style="width: 15%">
                           Nama
                       </th>
-                      <th style="width: 20%;">
+                      <th style="width: 15%;">
+                          Kategori
+                      </th>
+                      <th style="width: 10%;">
                           Harga
                       </th>
-                      <th style="width: 20%">
+                      <th style="width: 10%">
                           stok
+                      </th>
+                      <th style="width: 15%;">
+                          deskripsi
                       </th>
                       <th style="width: 20%">
                       Aksi
@@ -267,8 +273,12 @@
               <tbody>
               <?php
         include 'koneksi.php';
-        $query = "SELECT * FROM products";
-        $result = $conn->query($query);
+        $per_page = 5;
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $start = ($page - 1) * $per_page;
+        
+        $sql = "SELECT * FROM products LIMIT $start, $per_page";
+        $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -276,8 +286,10 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['product_code'] . "</td>";
                 echo "<td>" . $row['product_name'] . "</td>";
+                echo "<td>" . $row['id_kategori'] . "</td>";
                 echo "<td>" . $row['price'] . "</td>";
                 echo "<td>" . $row['stock'] . "</td>";
+                echo "<td>" . $row['description'] . "</td>";
                 
                 echo "<td>
                 <a href='edit.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' >Update</button></a>
@@ -294,6 +306,29 @@
         </div>
         <!-- /.card-body -->
       </div>
+      <div class="pagination pagination-sm justify-content-center">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+        <?php
+    $total_pages_sql = "SELECT COUNT(*) FROM products";
+    $total_pages_result = $conn->query($total_pages_sql);
+    $total_products = $total_pages_result->fetch_row()[0];
+    $total_pages = ceil($total_products / $per_page);
+
+
+    for ($i = 1; $i <= $total_pages; $i++) {
+        echo "<li class='page-item" . ($page == $i ? " active" : "") . "'>";
+        echo "<a class='page-link' href='?page=$i'>$i";
+        echo '<span aria-hidden="true">&raquo;</span>';
+        echo "</a>";
+        echo "</li>";
+    }
+    echo "</ul>";
+    echo "</nav>";
+
+    $conn->close();
+        ?>
       <!-- /.card -->
 
     </section>

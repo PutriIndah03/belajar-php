@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Update Data</title>
+  <title>List Produk</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -38,9 +38,9 @@
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block">
-          <form class="form-inline">
+          <form class="form-inline" action="" method="GET">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name = "search">
               <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
@@ -53,6 +53,15 @@
           </form>
         </div>
       </li>
+      <?php
+      include('koneksi.php');
+      $kata_kunci = $_GET['search'];
+
+      $sql = "SELECT * FROM products 
+        WHERE product_name LIKE '%$kata_kunci%' 
+        OR id_kategori LIKE '%$kata_kunci%' 
+        OR description LIKE '%$kata_kunci%'";
+      ?>
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -64,7 +73,7 @@
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <img src="../app/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Brad Diesel
@@ -158,38 +167,6 @@
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="../app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="../app/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
-        </div>
-      </div>
-
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-      <img src="../app/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Putri Indah APP</span>
     </a>
 
@@ -236,11 +213,6 @@
     <!-- /.sidebar -->
   </aside>
 
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -248,12 +220,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Update Data</h1>
+            <h1>List Produk</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Update Data</li>
+              <li class="breadcrumb-item active">List Produk</li>
             </ol>
           </div>
         </div>
@@ -262,70 +234,112 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Produk</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <a href="create.php"><button class="btn btn-success btn-sm" >Tambah data</button></a>
 
-            <?php
-    include 'koneksi.php';
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 5%">
+                          No
+                      </th>
+                      <th style="width: 15%">
+                          kode produk
+                      </th>
+                      <th style="width: 15%">
+                          Nama
+                      </th>
+                      <th style="width: 15%;">
+                          Kategori
+                      </th>
+                      <th style="width: 10%;">
+                          Harga
+                      </th>
+                      <th style="width: 10%">
+                          stok
+                      </th>
+                      <th style="width: 15%;">
+                          deskripsi
+                      </th>
+                      <th style="width: 20%">
+                      Aksi
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+              <?php
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $query = "SELECT * FROM products WHERE id = $id";
-        $result = $conn->query($query);
+$per_page = 5;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($page - 1) * $per_page;
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            ?>
-            
-        <form action="update.php" method="post">
-        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-        <div class="col-12">
-            <label for="kode_produk" class="form-label">Kode Produk</label>
-            <input type="text" class="form-control" value="<?php echo $row['product_code']; ?>" name="product_code">
-        </div>
-        <div class="col-12">
-            <label for="nama_produk" class="form-label">Nama Produk</label>
-            <input type="text" class="form-control" value="<?php echo $row['product_name']; ?>" name="product_name">
-        </div>
-        <div class="col-12">
-            <label for="kategori" class="form-label">Kategori</label>
-            <input type="text" class="form-control" value="<?php echo $row['id_kategori']; ?>"  name="kategori">
-        </div>
-        <div class="col-12">
-            <label for="harga" class="form-label">Harga</label>
-            <input type="number" class="form-control" value="<?php echo $row['price']; ?>" name="price">
-        </div>
-        <div class="col-12">
-            <label for="stok" class="form-label">Stok</label>
-            <input type="number" class="form-control" value="<?php echo $row['stock']; ?>" name="stock">
-        </div>
-        <div class="col-12">
-            <label for="deskrpsi" class="form-label">Deskripsi</label>
-            <input type="text" class="form-control" value="<?php echo $row['description']; ?>" name="deskripsi">
-        </div> <br>
-        <div class="col-12">
-          <a href="index.php" class="btn btn-secondary">Cancel</a>
-          <button class="btn btn-success float-right">Simpan</button>
-        </div>
-      </form>
-            <?php
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row['id'] . "</td>";
+                echo "<td>" . $row['product_code'] . "</td>";
+                echo "<td>" . $row['product_name'] . "</td>";
+                echo "<td>" . $row['id_kategori'] . "</td>";
+                echo "<td>" . $row['price'] . "</td>";
+                echo "<td>" . $row['stock'] . "</td>";
+                echo "<td>" . $row['description'] . "</td>";
+                
+                echo "<td>
+                <a href='edit.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' >Update</button></a>
+                <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-danger btn-sm'>Delete</button></a>
+                </td>";
+                echo "</tr>";
+            }
         } else {
-            echo "Produk tidak ditemukan.";
+            echo "<tr><td colspan='4'>Tidak ada produk.</td></tr>";
         }
+        ?>
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+      <div class="pagination pagination-sm justify-content-center">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+        <?php
+    $total_pages_sql = "SELECT COUNT(*) FROM products";
+    $total_pages_result = $conn->query($total_pages_sql);
+    $total_products = $total_pages_result->fetch_row()[0];
+    $total_pages = ceil($total_products / $per_page);
+
+
+    for ($i = 1; $i <= $total_pages; $i++) {
+        echo "<li class='page-item" . ($page == $i ? " active" : "") . "'>";
+        echo "<a class='page-link' href='?page=$i&search=$kata_kunci'>$i";
+        echo '<span aria-hidden="true">&raquo;</span>';
+        echo "</a>";
+        echo "</li>";
     }
+    echo "</ul>";
+    echo "</nav>";
+
     $conn->close();
-    ?>
-    
+        ?>
+        
+      <!-- /.card -->
+
     </section>
     <!-- /.content -->
   </div>
