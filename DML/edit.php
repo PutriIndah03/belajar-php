@@ -278,14 +278,15 @@
             <?php
     include 'koneksi.php';
 
-    if (isset($_GET['id'])) {
+    
         $id = $_GET['id'];
         $query = "SELECT * FROM products WHERE id = $id";
-        $result = $conn->query($query);
+        $result_produk = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($result_produk);
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            ?>
+        $sql_kategori = "SELECT id, category_name FROM product_categories";
+        $result_kategori = mysqli_query($conn, $sql_kategori);
+?>
             
         <form action="update.php" method="post">
         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
@@ -298,8 +299,15 @@
             <input type="text" class="form-control" value="<?php echo $row['product_name']; ?>" name="product_name">
         </div>
         <div class="col-12">
-            <label for="kategori" class="form-label">Kategori</label>
-            <input type="text" class="form-control" value="<?php echo $row['id_kategori']; ?>"  name="kategori">
+          <label for="kategori" class="form-label">Kategori</label> <br>
+          <select class="form-control" id="kategori" aria-label="Default select example" name="kategori">
+          <?php
+        while ($row_kategori = mysqli_fetch_assoc($result_kategori)) {
+            $selected = ($row['id_kategori'] == $row_kategori['id']) ? "selected" : "";
+            echo '<option value="' . $row_kategori['id'] . '" ' . $selected . '>' . $row_kategori['category_name'] . '</option>';
+        }
+        ?>
+    </select>
         </div>
         <div class="col-12">
             <label for="harga" class="form-label">Harga</label>
@@ -318,13 +326,6 @@
           <button class="btn btn-success float-right">Simpan</button>
         </div>
       </form>
-            <?php
-        } else {
-            echo "Produk tidak ditemukan.";
-        }
-    }
-    $conn->close();
-    ?>
     
     </section>
     <!-- /.content -->

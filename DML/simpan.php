@@ -1,7 +1,8 @@
 <?php
 include 'koneksi.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['product_code']) && isset($_POST['product_name']) && 
+isset($_POST['kategori']) && isset($_POST['price']) && isset($_POST['stock']) 
+&& isset($_POST['deskripsi'])) {
     $kode_produk = $_POST['product_code'];
     $nama = $_POST['product_name'];
     $kategori = $_POST['kategori'];

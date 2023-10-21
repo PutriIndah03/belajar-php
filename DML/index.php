@@ -277,7 +277,11 @@
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $start = ($page - 1) * $per_page;
         
-        $sql = "SELECT * FROM products LIMIT $start, $per_page";
+        $sql = "SELECT products.id, products.product_code, products.product_name,
+        product_categories.category_name, products.price, products.stock,
+        products.description FROM products
+        INNER JOIN product_categories ON products.id_kategori = product_categories.id
+        LIMIT $start, $per_page";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -286,7 +290,7 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['product_code'] . "</td>";
                 echo "<td>" . $row['product_name'] . "</td>";
-                echo "<td>" . $row['id_kategori'] . "</td>";
+                echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['price'] . "</td>";
                 echo "<td>" . $row['stock'] . "</td>";
                 echo "<td>" . $row['description'] . "</td>";

@@ -285,8 +285,17 @@
             <input type="text" class="form-control" id="nama_produk" name="product_name">
         </div>
         <div class="col-12">
-            <label for="kategori" class="form-label">Kategori</label>
-            <input type="text" class="form-control" id="kategori" name="kategori">
+          <label for="kategori" class="form-label">Kategori</label> <br>
+          <select class="form-control" id="kategori" aria-label="Default select example" name="kategori">
+        <?php
+        include('koneksi.php');
+        $sql_kategori = "SELECT id, category_name FROM product_categories";
+        $result_kategori = mysqli_query($conn, $sql_kategori);
+        while ($row = mysqli_fetch_assoc($result_kategori)) {
+            echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+        }
+        ?>
+    </select>
         </div>
         <div class="col-12">
             <label for="harga" class="form-label">Harga</label>
