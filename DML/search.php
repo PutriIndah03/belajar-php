@@ -22,12 +22,29 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+      <li class="nav-item mt-2">
+      <?php
+function konversi() {
+    date_default_timezone_set('Asia/Jakarta'); 
+    $hari = date('l'); 
+    $tanggal_waktu = date('Y-m-d H:i:s');
+    $hari_indonesia = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu'
+    ];
+
+    $hari = $hari_indonesia[$hari];
+    return $hari . ', ' . date('d F Y H:i:s', strtotime($tanggal_waktu));
+}
+$hasil_konversi = konversi();
+echo $hasil_konversi;
+?>
+</li>
     </ul>
 
     <!-- Right navbar links -->
@@ -57,9 +74,12 @@
       include('koneksi.php');
       $kata_kunci = $_GET['search'];
 
-      $sql = "SELECT * FROM products 
+      $sql = "SELECT products.id, products.product_code, products.product_name, products.image,
+      product_categories.category_name, products.price, products.stock,
+      products.description FROM products
+      INNER JOIN product_categories ON products.id_kategori = product_categories.id
         WHERE product_name LIKE '%$kata_kunci%' 
-        OR id_kategori LIKE '%$kata_kunci%' 
+        OR category_name LIKE '%$kata_kunci%' 
         OR description LIKE '%$kata_kunci%'";
       ?>
 
@@ -206,6 +226,15 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="../phpForm/login.php" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -253,25 +282,28 @@
           <table class="table table-striped projects">
               <thead>
                   <tr>
-                      <th style="width: 5%">
+                  <th style="width: 5%">
                           No
                       </th>
-                      <th style="width: 15%">
+                      <th style="width: 13%">
                           kode produk
                       </th>
                       <th style="width: 15%">
+                          Gambar
+                      </th>
+                      <th style="width: 10%">
                           Nama
                       </th>
-                      <th style="width: 15%;">
+                      <th style="width: 10%;">
                           Kategori
                       </th>
                       <th style="width: 10%;">
                           Harga
                       </th>
-                      <th style="width: 10%">
+                      <th style="width: 8%">
                           stok
                       </th>
-                      <th style="width: 15%;">
+                      <th style="width: 13%;">
                           deskripsi
                       </th>
                       <th style="width: 20%">
@@ -286,14 +318,25 @@ $per_page = 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $start = ($page - 1) * $per_page;
 
+
               $result = $conn->query($sql);
               if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['product_code'] . "</td>";
+                echo "<td>";
+                $imagePaths = json_decode($row['image']);
+                if (!empty($imagePaths)) {
+                    echo "<div class='product'>";
+                    foreach ($imagePaths as $path) {
+                        echo "<img src='" . $path . "' alt='Product Image' width='100'>";
+                    }
+                    echo "</div>";
+                }
+                echo "</td>";
                 echo "<td>" . $row['product_name'] . "</td>";
-                echo "<td>" . $row['id_kategori'] . "</td>";
+                echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['price'] . "</td>";
                 echo "<td>" . $row['stock'] . "</td>";
                 echo "<td>" . $row['description'] . "</td>";

@@ -41,12 +41,29 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+      <li class="nav-item mt-2">
+      <?php
+function konversi() {
+    date_default_timezone_set('Asia/Jakarta'); 
+    $hari = date('l'); 
+    $tanggal_waktu = date('Y-m-d H:i:s');
+    $hari_indonesia = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu'
+    ];
+
+    $hari = $hari_indonesia[$hari];
+    return $hari . ', ' . date('d F Y H:i:s', strtotime($tanggal_waktu));
+}
+$hasil_konversi = konversi();
+echo $hasil_konversi;
+?>
+</li>
     </ul>
 
     <!-- Right navbar links -->

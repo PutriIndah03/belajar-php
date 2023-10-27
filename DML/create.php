@@ -22,12 +22,29 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+      <li class="nav-item mt-2">
+      <?php
+function konversi() {
+    date_default_timezone_set('Asia/Jakarta'); 
+    $hari = date('l'); 
+    $tanggal_waktu = date('Y-m-d H:i:s');
+    $hari_indonesia = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu'
+    ];
+
+    $hari = $hari_indonesia[$hari];
+    return $hari . ', ' . date('d F Y H:i:s', strtotime($tanggal_waktu));
+}
+$hasil_konversi = konversi();
+echo $hasil_konversi;
+?>
+</li>
     </ul>
 
     <!-- Right navbar links -->
@@ -229,6 +246,15 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="../phpForm/login.php" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -275,7 +301,7 @@
               </div>
             </div>
 
-        <form action="simpan.php" method="post">
+        <form action="simpan.php" method="post" enctype="multipart/form-data">
         <div class="col-12">
             <label for="kode_produk" class="form-label">Kode Produk</label>
             <input type="text" class="form-control" id="kode_produk" name="product_code">
@@ -283,6 +309,10 @@
         <div class="col-12">
             <label for="nama_produk" class="form-label">Nama Produk</label>
             <input type="text" class="form-control" id="nama_produk" name="product_name">
+        </div>
+        <div class="col-12">
+            <label for="image" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="image"  name="image[]" multiple>
         </div>
         <div class="col-12">
           <label for="kategori" class="form-label">Kategori</label> <br>
