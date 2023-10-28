@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header('Location: ../phpForm/login.php'); // Redirect ke halaman login jika belum login
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -186,7 +195,7 @@ echo $hasil_konversi;
           <img src="../phpDasar2/oke.jpeg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Putri Indah</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -215,7 +224,7 @@ echo $hasil_konversi;
             </a>
           </li>
           <li class="nav-item">
-            <a href="../phpForm/login.php" class="nav-link">
+            <a href="../phpForm/logout.php" class="nav-link">
               <i class="nav-icon far fa-circle text-danger"></i>
               <p>
                 Logout

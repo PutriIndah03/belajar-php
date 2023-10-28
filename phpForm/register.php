@@ -23,9 +23,9 @@
     <div class="card-body">
       <p class="login-box-msg">Silahkan Lakukan Register</p>
 
-      <form action="../../index.html" method="post">
+      <form action="register_proses.php" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="nama lengkap">
+          <input type="text" class="form-control" placeholder="nama lengkap" name="name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" class="form-control" placeholder="Email" name="email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -41,15 +41,15 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="number" class="form-control" placeholder="No HP">
+          <input type="tel" class="form-control" placeholder="No HP"name="phone_number">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-tag"></span>
+              <span class="fas fa-phone"></span>
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Password" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -72,19 +72,7 @@
           <!-- /.col -->
         </div>
       </form>
-
-      <div class="social-auth-links text-center">
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i>
-          Sign up using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i>
-          Sign up using Google+
-        </a>
-      </div>
-
-      <a href="login.html" class="text-center">I already have a membership</a>
+      <a href="login.php" class="text-center">Saya Sudah Memiliki Akun</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
